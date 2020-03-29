@@ -12,6 +12,6 @@ email: mgoyal | github : mgoyal30 | dev branch : mgoyal30_2
 Task 1 and Task 2
 
 # 3. DALUWATTE Dhulan Seniru 
-email: dsdaluwatte | github : dsdaluwatte | dev branch : dsdaluwatte
+email: dsdaluwatte | github : dsdaluwatte | dev branch : dsd_feature1
 
 Task 5 and Task 6
