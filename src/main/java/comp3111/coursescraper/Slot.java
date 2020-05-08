@@ -6,11 +6,14 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.time.format.DateTimeFormatter;
 
+
+
 public class Slot {
 	private int day;
 	private LocalTime start;
 	private LocalTime end;
 	private String venue;
+	private String type; /// type data member to help clone a slot 
 	public static final String DAYS[] = {"Mo", "Tu", "We", "Th", "Fr", "Sa"};
 	public static final Map<String, Integer> DAYS_MAP = new HashMap<String, Integer>();
 	static {
@@ -18,6 +21,7 @@ public class Slot {
 			DAYS_MAP.put(DAYS[i], i);
 	}
 
+	
 	@Override
 	public Slot clone() {
 		Slot s = new Slot();
@@ -25,53 +29,65 @@ public class Slot {
 		s.start = this.start;
 		s.end = this.end;
 		s.venue = this.venue;
+		s.type = this.type;
 		return s;
 	}
+
 	public String toString() {
 		return DAYS[day] + start.toString() + "-" + end.toString() + ":" + venue;
 	}
+	
 	public int getStartHour() {
 		return start.getHour();
 	}
+
 	public int getStartMinute() {
 		return start.getMinute();
 	}
+
 	public int getEndHour() {
 		return end.getHour();
 	}
+
 	public int getEndMinute() {
 		return end.getMinute();
 	}
+
 	/**
 	 * @return the start
 	 */
 	public LocalTime getStart() {
 		return start;
 	}
+
 	/**
 	 * @param start the start to set
 	 */
 	public void setStart(String start) {
 		this.start = LocalTime.parse(start, DateTimeFormatter.ofPattern("hh:mma", Locale.US));
 	}
+
 	/**
 	 * @return the end
 	 */
 	public LocalTime getEnd() {
 		return end;
 	}
+
 	/**
 	 * @param end the end to set
 	 */
 	public void setEnd(String end) {
 		this.end = LocalTime.parse(end, DateTimeFormatter.ofPattern("hh:mma", Locale.US));
 	}
+
 	/**
 	 * @return the venue
 	 */
 	public String getVenue() {
 		return venue;
 	}
+
 	/**
 	 * @param venue the venue to set
 	 */
@@ -85,11 +101,43 @@ public class Slot {
 	public int getDay() {
 		return day;
 	}
+
 	/**
 	 * @param day the day to set
 	 */
 	public void setDay(int day) {
 		this.day = day;
 	}
+
+	// Task 1 additional member functions
+	/**
+	 * @return type of Slot 
+	 */
+	public String getType() {
+		return type; 
+		}
+
+	/**
+	 * @param type the type of Slot 
+	 */
+	public void setType(String type) { 
+		this.type = type; 
+		}
+
+
+	/**
+	* Checks if slot is valid
+	* @param s slot to be check
+`	* return whether a slot is valid i.e between 9AM - 10PM
+	*/
+	public static boolean isValidSlot(Slot s){
+				if(s == null) {
+					return false;
+				}
+				if (s.getStartHour() >= 9 && s.getEndHour() <= 22) {
+					return true;
+				}
+				else return false;
+}
 
 }
