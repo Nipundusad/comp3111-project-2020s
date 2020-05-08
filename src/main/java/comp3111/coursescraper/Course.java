@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Course {
 	private static final int DEFAULT_MAX_SLOT = 20;
-	
 	private String title ; 
 	private String description ;
 	private String exclusion;
