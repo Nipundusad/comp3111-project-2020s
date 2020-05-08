@@ -1,6 +1,6 @@
 package comp3111.coursescraper;
 
-import java.awt.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -130,19 +130,12 @@ public class Controller {
         }
         return numcourses;
     }
-    /**
-     * Global variable to keep track of Instructors 
-     */
+    
+    // Global helper variables
+     public static int NUM_PREFIXES = 0;
      public static List<Instructor> INSTRUCTORS_IN_SEARCH  = new ArrayList<Instructor>();
-    /**
-     * Global variable to keep track of number of sections 
-     */
      public static int NUM_SECTIONS = 0;
      
-     /**
-     * Global variable to keep track of the number of prefixes
-     */
-     public static int NUM_PREFIXES = 0;
 
     
      public static int inInstructorSearch(String _ins){
@@ -161,9 +154,9 @@ public class Controller {
       }
     @FXML
     void search() {
-    	Controller.NUM_SECTIONS = 0;
-        int NUM_COURSES = 0;
-
+    	Controller.NUM_SECTIONS = 0;		//initializing controller - number of sections
+        int NUM_COURSES = 0;				//initializing number of courses
+        
     	List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(),textfieldSubject.getText());
     	for (Course c : v) {
     		String newline = c.getTitle() + "\n";
@@ -173,27 +166,29 @@ public class Controller {
     		}
     		textAreaConsole.setText(textAreaConsole.getText() + "\n" + newline);
     	}
+    	// terminal errors
     	if(v == null) {
     		textAreaConsole.setText("Errors: check your terminal");
     		}
 
 
-        // handling 404 error - Anish
+        // handling 404 error 
         if(v.size() == 1) {
 
+        // handling unknown https error
+           if(v.get(0).getTitle().equals("UnknownHTTPSError")){
+        	   textAreaConsole.setText("UnknownHTTPSError");
+        	   return;
+           }
+           
           if(v.get(0).getTitle().equals("404PageNotFound")){
             textAreaConsole.setText("Error 404: Page not Found\nPlease check your parameters");
             return;
           }
-
-          if(v.get(0).getTitle().equals("UnknownHTTPSError")){
-            textAreaConsole.setText("UnknownHTTPSError");
-            return;
-          }
-
+         
         }
 
-        for(Course c : v) if(c.isValid()) NUM_COURSES++;
+        for(Course c : v) if(c.is_valid()) NUM_COURSES++;
 
 
       // number of prefixes
@@ -207,22 +202,29 @@ public class Controller {
       textAreaConsole.setText(textAreaConsole.getText() + "\n" +
       "Total Number of difference sections in this search: " + Controller.NUM_SECTIONS + "\n\n");
 
-      //Free instructors
+      //Instructors free on tuesday 3:10 PM
       List<String> freeInstructors = new ArrayList<String>();
-      for(Instructor ins : Controller.INSTRUCTORS_IN_SEARCH) if(ins.isFreeTu310()) freeInstructors.add(ins.getName());
+      for(Instructor ins : Controller.INSTRUCTORS_IN_SEARCH) {
+    	  if(ins.free_Tuesday_310_PM()) {
+    		  freeInstructors.add(ins.getName());
+    	  }
+      }
       Collections.sort(freeInstructors);
       String freeIns = "";
-      for(String str : freeInstructors) freeIns  += str + "\n";
+      for(String str : freeInstructors) {
+    	  freeIns  += str + "\n";
+      }
       textAreaConsole.setText(textAreaConsole.getText() + "\n" +
       "Instructors who has teaching assignment this term but does not need to teach at Tu 3:10pm:\n" + freeIns + "\n\n");
 
-//      for(Instructor ins : INSTRUCTORS_IN_SEARCH)
-  //
-//        if(ins.getName().equals("HUI, Pan")) for(Section s : ins.getSections()) System.out.println(s.get;
 
       //print sections
       String newline = "";
-    	for (Course c : v) if(c.isValid()) newline += c.toString() + "\n\n\n";
+    	for (Course c : v) {
+    		if(c.is_valid()) {
+    			newline += c.toString() + "\n\n\n";
+    		}
+    	}
       textAreaConsole.setText(textAreaConsole.getText() + "\n" + newline);
 
         // clear storage for next search
