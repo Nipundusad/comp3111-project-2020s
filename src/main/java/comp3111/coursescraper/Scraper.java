@@ -116,7 +116,7 @@ public class Scraper {
 	* @param c the course to which this section must be added
 	* @param secondRow T/F if secondRow
 	*/
-	private void addSection(HtmlElement e, Course c, boolean secondRow){
+	private void add_section(HtmlElement e, Course c, boolean secondRow){
 
 		String type = e.getChildNodes().get(secondRow ? 0 : 1).asText();
 		String times[] =  e.getChildNodes().get(secondRow ? 0 : 3).asText().split(" ");
@@ -182,14 +182,18 @@ public class Scraper {
 
 			// check if instructor already in search
 			int insIndex = Controller.inInstructorSearch(insName);
-			if(insIndex == -1) Controller.INSTRUCTORS_IN_SEARCH.add(new Instructor(insName, sec));
-			else Controller.INSTRUCTORS_IN_SEARCH.get(insIndex).addSection(sec);
+			if(insIndex == -1) {
+				Controller.INSTRUCTORS_IN_SEARCH.add(new Instructor(insName, sec));
+			}
+			else {
+				Controller.INSTRUCTORS_IN_SEARCH.get(insIndex).addSection(sec);
+			}
+		}
 		}
 	}
 
 
 	/**
-	* Adds a section found in the webpage tion
 	* @param c the course to which this section must be added
 	* @param secondRow T/F if secondRow
 	*/
@@ -229,7 +233,7 @@ public class Scraper {
 			s.setEnd(times[3]);
 			s.setVenue(venue);
 			s.setType(type);
-			sec.addSlot(s);
+			sec.add_slot(s);
 
 	}
 
@@ -241,11 +245,11 @@ public class Scraper {
 		s.setEnd(times[3]);
 		s.setVenue(venue);
 		s.setType(type);
-		sec.addSlot(s);
+		sec.add_slot(s);
 	}
 
 
-	c.addSection(sec);
+	c.add_section(sec);
 
 
 	if(e!= null){
@@ -310,8 +314,7 @@ public class Scraper {
 						}
 					}
 				}
-				c.setExclusion((exclusion 
-                      null ? "null" : exclusion.asText()));
+				c.setExclusion((exclusion == null ? "null" : exclusion.asText()));
 
 				c.set_common_core((attributes != null));
 
