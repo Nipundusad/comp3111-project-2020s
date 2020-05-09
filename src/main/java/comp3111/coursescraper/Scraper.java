@@ -183,10 +183,10 @@ public class Scraper {
 			// check if instructor already in search
 			int insIndex = Controller.inInstructorSearch(insName);
 			if(insIndex == -1) {
-				Controller.INSTRUCTORS_IN_SEARCH.add(new Instructor(insName, sec));
+				Controller.INSTRUCTOR.add(new Instructor(insName, sec));
 			}
 			else {
-				Controller.INSTRUCTORS_IN_SEARCH.get(insIndex).addSection(sec);
+				Controller.INSTRUCTOR.get(insIndex).addSection(sec);
 			}
 		}
 		}
@@ -261,8 +261,8 @@ public class Scraper {
 
 			// check if instructor already in search
 			int insIndex = Controller.inInstructorSearch(insName);
-			if(insIndex == -1) Controller.INSTRUCTORS_IN_SEARCH.add(new Instructor(insName, sec));
-			else Controller.INSTRUCTORS_IN_SEARCH.get(insIndex).addSection(sec);
+			if(insIndex == -1) Controller.INSTRUCTOR.add(new Instructor(insName, sec));
+			else Controller.INSTRUCTOR.get(insIndex).addSection(sec);
 		}
 	}
 
