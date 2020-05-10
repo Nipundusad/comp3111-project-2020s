@@ -598,7 +598,6 @@ public class Controller {
     	}
     }
     
-    
     public void enrollment_lost()
     {
     	String prefix = "";
