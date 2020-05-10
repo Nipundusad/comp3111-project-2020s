@@ -432,14 +432,14 @@ public class Controller {
         int NUM_COURSES = 0;				//initializing number of courses
         
     	List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(),textfieldSubject.getText());
-    	for (Course c : v) {
+    	/*for (Course c : v) {
     		String newline = c.getTitle() + "\n";
     		for (int i = 0; i < c.getNumSlots(); i++) {
     			Slot t = c.getSlot(i);
     			newline += "Slot " + i + ":" + t + "\n";
     		}
     		textAreaConsole.setText(textAreaConsole.getText() + "\n" + newline);
-    	}
+    	}*/
     	// terminal errors
     	if(v == null) {
     		textAreaConsole.setText("Errors: check your terminal");
@@ -520,20 +520,20 @@ public class Controller {
       
         create_list();
         
-        //textAreaConsole.setText("");
         
-        //enrollment_lost();
+        textAreaConsole.setText("");
+        
+        enrollment_lost();
         
         new_list.clear();
-        
-      	String sect = " ";
-      	Color col = new Color(Math.random(), Math.random(), Math.random(), 0.5);
-      	String prev_sect_type = " ";
       	
       	int count = 0;
       	
       	
       	for (Course c : v) {
+          	String sect = " ";
+          	Color col = new Color(Math.random(), Math.random(), Math.random(), 0.5);
+          	String prev_sect_type = " ";
       		for (int j = 0; j < c.getNumSlots(); j++) {
     	    		Slot slt = c.getSlot(j);
     	    		//System.out.println(c.getTitle().substring(0, 10));
@@ -552,7 +552,8 @@ public class Controller {
                     String instr = "";
                     for(int a=0; a<INSTRUCTOR.size(); ++a)
                     {
-                        if(INSTRUCTOR.get(a).teaches(cour.get_course_code()+" "+cour.get_section()))
+                        if(INSTRUCTOR.get(a).teaches(cour.getCoursecode()+" "+cour.getSection()))
+                          
                         {
                             instr += INSTRUCTOR.get(a).getName() + "\n";
                         }
@@ -561,7 +562,7 @@ public class Controller {
                     {
                         instr = "TBA";
                     }
-                    cour.set_instructor(instr);
+                    cour.setInstructor(instr);
                     //System.out.println(obj.get_instructor());
     	    		
     	            //Prevent duplication
@@ -573,11 +574,11 @@ public class Controller {
     	        	for(int l=0; l<data_all.size(); ++l)
     	        	{
     	        		List_Table_Class duplicate = data_all.get(l);
-    	        		if(duplicate.get_course_code().equals(cour.get_course_code()))
+    	        		if(duplicate.getCoursecode().equals(cour.getCoursecode()))
     	        		{
-    	        			if(duplicate.get_section().equals(cour.get_section()))
+    	        			if(duplicate.getSection().equals(cour.getSection()))
     	        			{
-    	        				if((duplicate.get_course_name().equals(cour.get_course_name()))&&((duplicate.get_today())==cour.get_today()))
+    	        				if((duplicate.getCoursename().equals(cour.getCoursename()))&&((duplicate.getToday())==cour.getToday()))
     	        				{
     	        					//cour = dup;
     	        					check = 1;
@@ -588,54 +589,53 @@ public class Controller {
     	        		}
     	            }
     	        	
-		        	//End of prevention of duplication
     	    		
 		            if((slt.getType()!=sect)&&(slt.getType().length()<11))
 		            {
 		            	System.out.println("First if after duplicate");
 		            	if(check != 1)
 		            	{
-		            		System.out.println("First Check != 1");
+		            		//System.out.println("First Check != 1");
 		            		data_enroll_lost.add(cour);
 		            	}
 		
 		            	if(check == 1)
 		            	{
-		            		System.out.println("Check = 1");
+		            		//System.out.println("Check = 1");
 		                    new_list.add(duplicate_check);
 		            	}
 		            	else
 		            	{
-		            		count = count + 1;
-		            		System.out.println("Check != 1");
+		            		//count = count + 1;
+		            		//System.out.println("Check != 1");
 		            		new_list.add(cour);
 		            	}
 		
 		            	sect = slt.getType();
 		            	col = new Color(Math.random(), Math.random(), Math.random(), 0.5);
-		            	cour.set_colours(col);
-			      		if (count == 6) {
+		            	cour.setColours(col);
+			      		/*if (count == 6) {
 			      			System.out.println("Break");
 			      			break;
-			      		}
+			      		}*/
 		            }
 		            
 		            if(slt.getType().length()>11)
 		            {
 		            	System.out.println("Second if");
-		                cour.set_section(prev_sect_type.substring(0, 3));
-		                cour.set_colours(col);
+		                cour.setSection(prev_sect_type.substring(0, 3));
+		                cour.setColours(col);
 		            }
 		
 		            //
 		            for(int l=0; l<data_all.size(); ++l)
 		        	{
 		        		List_Table_Class duplicate = data_all.get(l);
-		        		if(duplicate.get_course_code().equals(cour.get_course_code()))
+		        		if(duplicate.getCoursecode().equals(cour.getCoursecode()))
 		        		{
-		        			if(duplicate.get_section().equals(cour.get_section()))
+		        			if(duplicate.getSection().equals(cour.getSection()))
 		        			{
-		        				if((duplicate.get_course_name().equals(cour.get_course_name()))&&((duplicate.get_today())==cour.get_today()))
+		        				if((duplicate.getCoursename().equals(cour.getCoursename()))&&((duplicate.getToday())==cour.getToday()))
 		        				{
 		                            ext++;
 		                        }
@@ -652,49 +652,50 @@ public class Controller {
 		                //datasAll.add(cour);
 		            }
 		            prop_list.setItems(new_list);
+		            
+		            //Label y = new Label(cour.getCoursecode());
+		            //ap.getChildren().addAll(y);
+		           
 		            //System.out.println(prop_list);
 		
-		            newline += cour.get_course_code() + " " + cour.get_section() + "Slot " + j + ":" + slt + "\n";	//My version which adds sections
-		            if (check != 1) {
-		            	add_block(cour, slt);
-		            	same_section(cour, slt);
-		            }
+		            newline += cour.getCoursecode() + " " + cour.getSection() + "Slot " + j + ":" + slt + "\n";	//My version which adds sections
 		            
 		
-		            /*if(flagg!=1)
+		            if(check !=1)
 		            {
-		            	obj.get_enroll().selectedProperty().addListener(new ChangeListener<Boolean>() {
+		            	cour.getEnroll().selectedProperty().addListener(new ChangeListener<Boolean>() {
 		            		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		
 		            			if(newValue==true)
 		            			{
 		            				//System.out.println("Checkbox is checked");
-		                			add_block(obj, t);
-		                			same_section(obj, t);
-		                			print_enrolled(obj);
+		                			add_block(cour, slt);
+		                			same_section(cour, slt);
+		                			print_enrolled(cour);
 		            			}
 		            			else if((newValue==false)&&(oldValue==true))
 		            			{
 		            				//Need to remove label from TimeTable and print on console
-		            				if(data_enroll_lost.contains(obj))
+		            				if(data_enroll_lost.contains(cour))
 		            				{
-		            					print_removed_enrolled(obj);
+		            					print_removed_enrolled(cour);
 		            				}
-		            				remove_block(obj, t);
+		            				remove_block(cour, slt);
 		            			}
 		
 		                	}
 		            	});
-		            }*/
+		            }
 		            
-		            System.out.println(count);
+		            //System.out.println(count);
     	        	prev_sect_type = sect;
       			}
-      		if (count == 6) {
+      		/*if (count == 6) {
       			System.out.println("Break");
       			break;
-      		}
-      		//textAreaConsole.setText(textAreaConsole.getText() + "\n" + newline);
+      		}*/
+      		textAreaConsole.setText(textAreaConsole.getText() + "\n" + newline);
+      		
       	}
         // clear storage for next search
         freeInstructors.clear();
@@ -705,18 +706,20 @@ public class Controller {
 	@FXML
 	public void create_list() {
 		
-		prop_course_code = new TableColumn<List_Table_Class, String>("CourseCode"); 
-		prop_section = new TableColumn<List_Table_Class, String>("Section"); 
-		prop_course_name = new TableColumn<List_Table_Class, String>("CourseName"); 
-		prop_instructor = new TableColumn<List_Table_Class, String>("Instructor"); 
-		prop_enroll = new TableColumn<List_Table_Class, CheckBox>("Enroll"); 
-		prop_list = new TableView<List_Table_Class>();
+		/*prop_course_code = new TableColumn<List_Table_Class, String>("CourseCode"); 
+		prop_section = new TableColumn<>("Section"); 
+		prop_course_name = new TableColumn<>("CourseName"); 
+		prop_instructor = new TableColumn<>("Instructor"); 
+		prop_enroll = new TableColumn<>("Enroll"); 
+		prop_list = new TableView<>();*/
 		
-		prop_course_code.setCellValueFactory(new PropertyValueFactory<>("course_code"));
+		prop_course_code.setCellValueFactory(new PropertyValueFactory<>("coursecode"));
     	prop_section.setCellValueFactory(new PropertyValueFactory<>("section"));
-    	prop_course_name.setCellValueFactory(new PropertyValueFactory<>("course_name"));
+    	prop_course_name.setCellValueFactory(new PropertyValueFactory<>("coursename"));
     	prop_instructor.setCellValueFactory(new PropertyValueFactory<>("instructor"));
-    	prop_enroll.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
+    	prop_enroll.setCellValueFactory(new PropertyValueFactory<>("enroll"));
+    	
+    	//prop_list.refresh();
 	}
 	
 	@FXML
@@ -724,42 +727,42 @@ public class Controller {
     {
     	AnchorPane anc_pane = (AnchorPane)tabTimetable.getContent();
     	
-    	ltc.get_labels().setBackground(new Background(new BackgroundFill(ltc.get_colours(), CornerRadii.EMPTY, Insets.EMPTY)));
+    	ltc.getLabels().setBackground(new Background(new BackgroundFill(ltc.getColours(), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        ltc.get_labels().setText(ltc.get_course_code()+"\n"+ltc.get_section());
+        ltc.getLabels().setText(ltc.getCoursecode()+"\n"+ltc.getSection());
 
     	int day = slt.getDay();
 
-    	ltc.get_labels().setLayoutX((day*100.0)+100.0);
+    	ltc.getLabels().setLayoutX((day*100.0)+100.0);
     	int start_time_m = slt.getStartMinute();
     	int start_time_h = slt.getStartHour();
     	int started_time = (start_time_h*60)+start_time_m;
 
-    	ltc.get_labels().setLayoutY(40.0 + (start_time_h-9)*20.0 + (start_time_m*0.33));
+    	ltc.getLabels().setLayoutY(40.0 + (start_time_h-9)*20.0 + (start_time_m*0.33));
     	int end_time_m = slt.getEndMinute();
     	int end_time_h = slt.getEndHour();
     	int ended_time  = (end_time_h*60)+end_time_m;
 
-    	ltc.get_labels().setMinWidth(100.0);
+    	ltc.getLabels().setMinWidth(100.0);
 
-    	ltc.get_labels().setMaxWidth(100.0);
+    	ltc.getLabels().setMaxWidth(100.0);
 
     	int difference = end_time_m-start_time_m;
     	int offset = difference==50 ? 30 : difference==20 ? 15 : 0;
 
     	int dur = ended_time-started_time;
 
-    	ltc.get_labels().setMinHeight(dur*0.33);
-    	ltc.get_labels().setMaxHeight(dur*0.33);
+    	ltc.getLabels().setMinHeight(dur*0.33);
+    	ltc.getLabels().setMaxHeight(dur*0.33);
 
     	if(dur<60)
     	{
-    		ltc.get_labels().setText(ltc.get_course_code()+" "+ltc.get_section());
+    		ltc.getLabels().setText(ltc.getCoursecode()+" "+ltc.getSection());
     	}
 
-        ltc.get_labels().setFont(ltc.get_labels().getFont().font(10));
+        ltc.getLabels().setFont(ltc.getLabels().getFont().font(10));
 
-    	anc_pane.getChildren().addAll(ltc.get_labels());
+    	anc_pane.getChildren().addAll(ltc.getLabels());
     }
 	
 	
@@ -768,13 +771,13 @@ public class Controller {
     {
     	for(int i=0; i<data_all.size(); ++i)
     	{
-    		if((data_all.get(i).get_course_code().equals(ltc.get_course_code()))&&(data_all.get(i).get_section().equals(ltc.get_section())))
+    		if((data_all.get(i).getCoursecode().equals(ltc.getCoursecode()))&&(data_all.get(i).getSection().equals(ltc.getSection())))
     		{
-    			if((data_all.get(i).get_enroll().isSelected()==false)&&((ltc.get_enroll().isSelected())==true))
+    			if((data_all.get(i).getEnroll().isSelected()==false)&&((ltc.getEnroll().isSelected())==true))
     			{
                     //System.out.println(":/");
-                    data_all.get(i).set_colours(ltc.get_colours());
-                    data_all.get(i).get_enroll().setSelected(true);
+                    data_all.get(i).setColours(ltc.getColours());
+                    data_all.get(i).getEnroll().setSelected(true);
                     break;
     			}
     		}
@@ -801,20 +804,20 @@ public class Controller {
     			}
     		}
 
-    		if((ltc.get_course_code() + " " + ltc.get_section()).equals(newstr)==false)
+    		if((ltc.getCoursecode() + " " + ltc.getSection()).equals(newstr)==false)
     		{
-    			textAreaConsole.setText(textAreaConsole.getText().substring(0, 37) + ltc.get_course_code() + " " + ltc.get_section() + "\n" + textAreaConsole.getText().substring(37));
+    			textAreaConsole.setText(textAreaConsole.getText().substring(0, 37) + ltc.getCoursecode() + " " + ltc.getSection() + "\n" + textAreaConsole.getText().substring(37));
     		}
     	}
     	else
     	{
-    		textAreaConsole.setText("The following sections are enrolled:" + "\n" + ltc.get_course_code() + " " + ltc.get_section() +"\n" + textAreaConsole.getText());
+    		textAreaConsole.setText("The following sections are enrolled:" + "\n" + ltc.getCoursecode() + " " + ltc.getSection() +"\n" + textAreaConsole.getText());
     	}
     }
 	
     public void print_removed_enrolled(List_Table_Class ltc)
     {
-    	String match = ltc.get_course_code() + " " + ltc.get_section();
+    	String match = ltc.getCoursecode() + " " + ltc.getSection();
     	String resultant = "";
         int end = 0;
 
@@ -850,9 +853,9 @@ public class Controller {
 
     	for(int i=0; i<data_enroll_lost.size(); ++i)
     	{
-    		if(data_enroll_lost.get(i).get_enroll().isSelected())
+    		if(data_enroll_lost.get(i).getEnroll().isSelected())
     		{
-    			prefix += data_enroll_lost.get(i).get_course_code() + " " + data_enroll_lost.get(i).get_section() + "\n";
+    			prefix += data_enroll_lost.get(i).getCoursecode() + " " + data_enroll_lost.get(i).getSection() + "\n";
     			flag = 1;
     		}
     	}
@@ -871,12 +874,12 @@ public class Controller {
 
     	for(int i=0; i<data_all.size(); ++i)
     	{
-    		if((data_all.get(i).get_labels().getText()).equals(ltc.get_labels().getText()))
+    		if((data_all.get(i).getLabels().getText()).equals(ltc.getLabels().getText()))
     		{
-    			ap.getChildren().remove(data_all.get(i).get_labels());
-    			if(data_all.get(i).get_enroll().isSelected())
+    			ap.getChildren().remove(data_all.get(i).getLabels());
+    			if(data_all.get(i).getEnroll().isSelected())
     			{
-    				data_all.get(i).get_enroll().setSelected(false);
+    				data_all.get(i).getEnroll().setSelected(false);
     			}
     		}
     	}

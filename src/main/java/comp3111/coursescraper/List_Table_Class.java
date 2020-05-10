@@ -20,11 +20,11 @@ import javafx.scene.control.Label;
  */
  
 public class List_Table_Class {
-	private String course_code;
+	private String coursecode;
 	private String section;
-	private String course_name;
+	private String cname;
 	private String instructor;
-	private CheckBox enrolled;
+	private CheckBox enroll;
 	private Color colours;
 	private Label labels;
 	private int today;
@@ -40,11 +40,11 @@ public class List_Table_Class {
 	 */
 	
 	public List_Table_Class(String cc, String sect, String cn, String instr, Color col, int t) {
-		this.course_code = cc;
+		this.coursecode = cc;
 		this.section = sect;
-		this.course_name = cn;
+		this.cname = cn;
 		this.instructor = instr;
-		this.enrolled = new CheckBox();
+		this.enroll = new CheckBox();
 		this.colours = col;
 		this.labels = new Label();
 		this.today = t;
@@ -55,9 +55,9 @@ public class List_Table_Class {
 	 */
 	
 	public List_Table_Class() {
-		this.course_code = " ";
+		this.coursecode = " ";
 		this.section = " ";
-		this.course_name = " ";
+		this.cname = " ";
 		this.instructor = " ";
 		this.colours = Color.rgb(0, 0, 0, 0);
 		this.today = 1;
@@ -68,16 +68,16 @@ public class List_Table_Class {
 	 * @return course code of the object
 	 */
 	
-	public String get_course_code()
+	public String getCoursecode()
 	{
-		return this.course_code;
+		return this.coursecode;
 	}
 	
 	/**
 	 * Gets lecture section of the object
 	 * @return lecture section of the object
 	 */
-	public String get_section()
+	public String getSection()
 	{
 		return this.section;
 	}
@@ -86,16 +86,16 @@ public class List_Table_Class {
 	 * Gets course name of the object
 	 * @return course name of the object
 	 */
-	public String get_course_name() {
-		return this.course_name;
+	public String getCoursename() {
+		return this.cname;
 	}
 	
 	/**
 	 * Gets the enrollment status of the object
 	 * @return course name of the object
 	 */
-	public CheckBox get_enroll() {
-		return this.enrolled;
+	public CheckBox getEnroll() {
+		return this.enroll;
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public class List_Table_Class {
 	 * @return instructor of the label
 	 * 
 	 */
-	public String get_instructor() {
+	public String getInstructor() {
 		return this.instructor;
 	}
 	
@@ -112,7 +112,7 @@ public class List_Table_Class {
 	 * @return colour of the label
 	 * 
 	 */
-	public Color get_colours() {
+	public Color getColours() {
 		return this.colours;
 	}
 	
@@ -121,7 +121,7 @@ public class List_Table_Class {
 	 * @return label of the object
 	 * 
 	 */
-	public Label get_labels() {
+	public Label getLabels() {
 		return this.labels;
 	}
 	
@@ -130,7 +130,7 @@ public class List_Table_Class {
 	 * @return day of slot of the object
 	 * 
 	 */
-	public int get_today() {
+	public int getToday() {
 		return this.today;
 	}
 	
@@ -138,15 +138,15 @@ public class List_Table_Class {
 	 * Set the course code
 	 * @param cc Course code
 	 */
-	public void set_course_code(String cc) {
-		this.course_code = cc;
+	public void setCoursecode(String cc) {
+		this.coursecode = cc;
 	}
 	
 	/**
 	 * Set the lecture section
 	 * @param sect Lecture section
 	 */
-	public void set_section(String sect) {
+	public void setSection(String sect) {
 		this.section = sect;
 	}
 	
@@ -154,23 +154,23 @@ public class List_Table_Class {
 	 * Set the course name
 	 * @param cn Course name
 	 */
-	public void set_course_name(String cn) {
-		this.course_name = cn;
+	public void setCoursename(String cn) {
+		this.cname = cn;
 	}
 	
 	/**
 	 * Set the enrollment status 
 	 * @param enr Enrollment status checkbox
 	 */
-	public void set_enroll(CheckBox enr) {
-		this.enrolled = enr;
+	public void setEnroll(CheckBox enr) {
+		this.enroll = enr;
 	}
 	
 	/**
 	 * Set the instructor 
 	 * @param instr Instructor
 	 */
-	public void set_instructor(String instr) {
+	public void setInstructor(String instr) {
 		this.instructor = instr;
 	}
 	
@@ -178,7 +178,7 @@ public class List_Table_Class {
 	 * Set the colour
 	 * @param col Colour
 	 */
-	public void set_colours(Color col) {
+	public void setColours(Color col) {
 		this.colours = col;
 	}
 	
@@ -186,7 +186,7 @@ public class List_Table_Class {
 	 * Set the label
 	 * @param la Label
 	 */
-	public void set_label(Label la) {
+	public void setLabel(Label la) {
 		this.labels = la;
 	}
 	
@@ -194,7 +194,7 @@ public class List_Table_Class {
 	 * Set the day
 	 * @param t Day
 	 */
-	public void set_today(int t) {
+	public void setToday(int t) {
 		this.today = t;
 	}
 }
