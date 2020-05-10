@@ -21,13 +21,15 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
+import java.util.Iterator;
 import javafx.scene.paint.Color;
-
-//import java.util.Random;
+import java.util.regex.Pattern;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 
 public class Controller {
@@ -86,28 +88,28 @@ public class Controller {
     @FXML
     private CheckBox PM;
     @FXML
-    private CheckBox Mon;
+    private CheckBox MON;
     @FXML
-    private CheckBox Tues;
+    private CheckBox TUE;
     @FXML
-    private CheckBox Wed;
+    private CheckBox WED;
     @FXML
-    private CheckBox Thrs;
+    private CheckBox THU;
     @FXML
-    private CheckBox Fri;
+    private CheckBox FRI;
     @FXML
-    private CheckBox Sat;
+    private CheckBox SAT;
     @FXML
     private CheckBox CC;
     @FXML
     private CheckBox NE;
     @FXML
-    private CheckBox LT;
+    private CheckBox LT; 
     @FXML
     /**
      * Select All Button in Filter Tab
      */
-    public Button SelectAll;
+    public Button SELECT_ALL;
     
     @FXML
     private TableView<List_Table_Class> prop_list;
@@ -142,6 +144,251 @@ public class Controller {
     @FXML
     void findSfqEnrollCourse() {
 
+    }
+    
+    public void filterResults() {
+        List<Boolean> is_ticked = new ArrayList<Boolean>();
+        Boolean[] is_checked = new Boolean[11];
+
+        for (int i = 0; i < 11; i++) {
+            is_checked[i] = false;
+            is_ticked.add(i, false);
+        }
+
+
+        List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(),textfieldSubject.getText());
+        for (Course c : v) {
+            Boolean check_has_one;
+            String newline= c.getTitle() + "\n";
+            if (AM.isSelected()) {
+                is_checked[0] = check_AM(c);
+                is_ticked.add(0, true);
+            }
+            if (PM.isSelected()) {
+                is_checked[1] = check_PM(c);
+                is_ticked.add(1, true);
+            }
+            
+            if (MON.isSelected()) {
+                is_checked[2] = check_MON(c);
+                is_ticked.add(2, true);
+            }
+            if (TUE.isSelected()) {
+                is_checked[3] = check_TUE(c);
+                is_ticked.add(3, true);
+            }
+            if (WED.isSelected()) {
+                is_checked[4] = check_WED(c);
+                is_ticked.add(4, true);
+            }
+            if (THU.isSelected()) {
+                is_checked[5] = check_THU(c);
+                is_ticked.add(5, true);
+            }
+            if (FRI.isSelected()) {
+                is_checked[6] = check_FRI(c);
+                is_ticked.add(6, true);
+            }
+            if (SAT.isSelected()) {
+                is_checked[7] = check_SAT(c);
+                is_ticked.add(7, true);
+            }
+            if (LT.isSelected()) {
+                is_checked[8] = check_LT(c);
+                is_ticked.add(8, true);
+            }
+            if (CC.isSelected()) {
+                is_checked[9] = check_CC(c);
+                is_ticked.add(9, true);
+            }
+            if (NE.isSelected()) {
+                is_checked[10] = check_NE(c);
+                is_ticked.add(10, true);
+            }
+            
+            
+            List<Integer> index = new ArrayList<>();
+            int cou = 0;
+            while(cou < 11) {
+                if(is_ticked.get(cou)) {
+                    index.add(cou);
+                }
+                cou++;
+            }
+            Iterator i = index.iterator();
+            check_has_one = true; 
+            while (i.hasNext()) {
+                if (!is_checked[(int)i.next()]) {
+                	check_has_one = false;
+                }
+            }
+            is_ticked.removeAll(is_ticked);
+            for (int k = 0; k < 11; k++) {
+                is_checked[k] = false;
+                is_ticked.add(k, false);
+            }
+        }// end for
+        
+        
+   }// end function	
+    
+    
+    
+    public static Boolean check_AM(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            LocalTime time = LocalTime.parse("12:00");
+            
+            if (t.getStart().compareTo(time) < 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_PM(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            LocalTime time = LocalTime.parse("12:00");
+            
+            if (t.getStart().compareTo(time) > 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_LT(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            String type = t.getType();
+            Boolean b = Pattern.matches("T\\d", type);
+            if (type.contains("LA") || b) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_CC(Course c) {
+        return c.get_common_core();
+
+    }
+    
+    public static Boolean check_NE(Course c) {
+        if (c.getExclusion() == "null") {
+            return true;
+        }
+        return false;
+    }
+
+    public static Boolean check_MON(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_TUE(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 1) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_WED(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 2) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_THU(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 3) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    public static Boolean check_FRI(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 4) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
+    public static Boolean check_SAT(Course c) {
+        Boolean check = false;
+        for (int i = 0; i < c.getNumSlots(); i++) {
+            Slot t = c.getSlot(i);
+            if (t.getDay() == 5) {
+                check = true;
+            }
+        }
+        return check;
+    }
+    
+    //IMPLEMENTATION OF SELECT_ALL BUTTON
+    
+    public void select_all() {
+        AM.setSelected(true);
+        PM.setSelected(true);
+        LT.setSelected(true);
+        CC.setSelected(true);
+        NE.setSelected(true);
+        MON.setSelected(true);
+        TUE.setSelected(true);
+        WED.setSelected(true);
+        THU.setSelected(true);
+        FRI.setSelected(true);
+        SAT.setSelected(true);
+        
+        filterResults();
+        SELECT_ALL.setText("Deselect All");
+        SELECT_ALL.setOnAction(e -> deselect_all());
+    }
+    
+    
+    //IMPLEMENTATION OF DESELECT_ALL BUTTON
+
+    public void deselect_all() {
+        AM.setSelected(false);
+        PM.setSelected(false);
+        LT.setSelected(false);
+        CC.setSelected(false);
+        NE.setSelected(false);
+        MON.setSelected(false);
+        TUE.setSelected(false);
+        WED.setSelected(false);
+        THU.setSelected(false);
+        FRI.setSelected(false);
+        SAT.setSelected(false);
+       
+        SELECT_ALL.setText("Select All");
+        SELECT_ALL.setOnAction(t -> select_all());
     }
     public int searchCount() {
         int numcourses = 0;
@@ -306,6 +553,7 @@ public class Controller {
                     for(int a=0; a<INSTRUCTOR.size(); ++a)
                     {
                         if(INSTRUCTOR.get(a).teaches(cour.getCoursecode()+" "+cour.getSection()))
+                          
                         {
                             instr += INSTRUCTOR.get(a).getName() + "\n";
                         }
