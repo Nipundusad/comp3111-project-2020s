@@ -145,8 +145,9 @@ public class Controller {
     void findSfqEnrollCourse() {
 
     }
-    
+
     public void filterResults() {
+        String newline= "";
         List<Boolean> is_ticked = new ArrayList<Boolean>();
         Boolean[] is_checked = new Boolean[11];
 
@@ -159,54 +160,220 @@ public class Controller {
         List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(),textfieldSubject.getText());
         for (Course c : v) {
             Boolean check_has_one;
-            String newline= c.getTitle() + "\n";
             if (AM.isSelected()) {
                 is_checked[0] = check_AM(c);
                 is_ticked.add(0, true);
+               
+                
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getStartHour() >= 9 && t.getStartHour() < 12 ) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";      
+            			
+        				}
+            		}
+            		}
             }
             if (PM.isSelected()) {
                 is_checked[1] = check_PM(c);
                 is_ticked.add(1, true);
+                
+                
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getStartHour() >= 12) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";      
+            			
+        				}
+            		}
+            		}
             }
+          
             
             if (MON.isSelected()) {
                 is_checked[2] = check_MON(c);
                 is_ticked.add(2, true);
-            }
+              
+                
+            	for (int i = 0; i < c.get_sections().size(); i++) {
+            	
+            	Section r = c.get_sections().get(i);
+    			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+    				Slot t = r.get_slot(temp);
+    				if(t.getDay() == 0) {
+    					if(temp == 0) {
+    					newline += c.getTitle(); }
+    					
+    					newline += "\n"+ r.toString() + "\n\n\n";                
+        			
+    				}
+        		}
+        		}
+
+                
+
+               }
+            
             if (TUE.isSelected()) {
                 is_checked[3] = check_TUE(c);
                 is_ticked.add(3, true);
+                    
+                	for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getDay() == 1) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";              			
+        		}
+        			}
+        			}
+
+                
+
             }
             if (WED.isSelected()) {
                 is_checked[4] = check_WED(c);
                 is_ticked.add(4, true);
+                
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getDay() == 2) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";              			
+        		}
+        			}
+        			}
             }
             if (THU.isSelected()) {
                 is_checked[5] = check_THU(c);
                 is_ticked.add(5, true);
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getDay() == 3) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";              			
+        		}
+        			}
+        			}
             }
             if (FRI.isSelected()) {
                 is_checked[6] = check_FRI(c);
                 is_ticked.add(6, true);
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getDay() == 4) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";              			
+        		}
+        			}
+        			}
             }
             if (SAT.isSelected()) {
                 is_checked[7] = check_SAT(c);
                 is_ticked.add(7, true);
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        				if(t.getDay() == 5) {
+        					if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";              			
+        		}
+        			}
+        			}
             }
             if (LT.isSelected()) {
                 is_checked[8] = check_LT(c);
                 is_ticked.add(8, true);
+                
+                for (int i = 0; i < c.get_sections().size(); i++) {
+                	
+                	Section r = c.get_sections().get(i);
+        			for(int temp = 0; temp < r.get_num_of_slots(); temp++) {
+        				Slot t = r.get_slot(temp);
+        	           
+        	            if (t.getType().contains("LA") || t.getType().contains("T"))
+        				 {
+        	            	if(temp == 0) {
+            					newline += c.getTitle(); }
+            					
+            					newline += "\n"+ r.toString() + "\n\n\n";      
+            					}
+        			}
+        			}
+                
+                
             }
             if (CC.isSelected()) {
                 is_checked[9] = check_CC(c);
                 is_ticked.add(9, true);
-            }
+                
+                    if(c.get_common_core()) {
+                    
+                    	newline += c.toString() + "\n\n\n";  
+                    	
+                    
+                    }
+                    
+
+                }
+
+            
             if (NE.isSelected()) {
                 is_checked[10] = check_NE(c);
                 is_ticked.add(10, true);
+                
+                for (Course x : v) {
+                    if(x.getExclusion() != "") {
+                    
+                    	newline += x.toString() + "\n\n\n";  
+                    	
+                    }
+                    }
             }
-            
-            
+            if(newline == "") 
+            {
+                textAreaConsole.setText(textAreaConsole.getText() );             
+            }
+            else {
+    		
+            	textAreaConsole.setText(newline);
+            	}
+
             List<Integer> index = new ArrayList<>();
             int cou = 0;
             while(cou < 11) {
@@ -215,6 +382,7 @@ public class Controller {
                 }
                 cou++;
             }
+             
             Iterator i = index.iterator();
             check_has_one = true; 
             while (i.hasNext()) {
