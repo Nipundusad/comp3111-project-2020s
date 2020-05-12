@@ -89,6 +89,7 @@ public class Scraper {
 		client.getOptions().setJavaScriptEnabled(false);
 	}
 
+	
 	private void addSlot(HtmlElement e, Course c, boolean secondRow) {
 		String type = e.getChildNodes().get(secondRow ? 0 : 1).asText();
 		String times[] =  e.getChildNodes().get(secondRow ? 0 : 3).asText().split(" ");
@@ -112,91 +113,16 @@ public class Scraper {
 
 	}
 
-	/**
-	* @param c the course to which this section must be added
-	* @param secondRow T/F if secondRow
-	*/
-	private void add_section(HtmlElement e, Course c, boolean secondRow){
-
-		String type = e.getChildNodes().get(secondRow ? 0 : 1).asText();
-		String times[] =  e.getChildNodes().get(secondRow ? 0 : 3).asText().split(" ");
-		String venue = e.getChildNodes().get(secondRow ? 1 : 4).asText();
-
-
-		DomNode next = e.getNextSibling();
-		boolean addNext = false;
-		if(next != null){
-			String day = next.asText().substring(0, 2);
-			for(int i = 0; i < Slot.DAYS.length; i++) if(Slot.DAYS[i].equals(day)) addNext = true;
-
-
-		}
-
-		String sectionCode = c.getTitle().split(" ")[0] + c.getTitle().split(" ")[1];
-		sectionCode += " " + type.split(" ")[0];
-		String sID = StringUtils.substringBetween(type, "(", ")");
-		if(sID == null) return;
-		int sectionID = Integer.parseInt(sID);
-
-		if(!type.startsWith("R")) Controller.NUM_SECTIONS++;
-
-
-		Section sec = new Section(sectionCode, sectionID);
-
-
-		for (int j = 0; j < times[0].length(); j+=2) {
-			String code = times[0].substring(j , j + 2);
-			if (Slot.DAYS_MAP.get(code) == null)
-				break;
-			Slot s = new Slot();
-			s.setDay(Slot.DAYS_MAP.get(code));
-			s.setStart(times[1]);
-			s.setEnd(times[3]);
-			s.setVenue(venue);
-			s.setType(type);
-			sec.add_slot(s);
-
-	}
-
-	if(addNext){
-		String timesNext[] = next.asText().split(" ");
-		Slot s = new Slot();
-		s.setDay(Slot.DAYS_MAP.get(timesNext[0]));
-		s.setStart(times[1]);
-		s.setEnd(times[3]);
-		s.setVenue(venue);
-		s.setType(type);
-		sec.add_slot(s);
-	}
-
-
-	c.add_section(sec);
-
-
-	if(e!= null){
-		List<?> instructors = (List<?>) e.getByXPath(".//a[contains(@href,'instructor')]");
-		for(HtmlElement ins: (List<HtmlElement>)instructors){
-
-			// find the name
-			String insName = ins.asText();
-
-			// check if instructor already in search
-			int insIndex = Controller.inInstructorSearch(insName);
-			if(insIndex == -1) {
-				Controller.INSTRUCTOR.add(new Instructor(insName, sec));
-			}
-			else {
-				Controller.INSTRUCTOR.get(insIndex).addSection(sec);
-			}
-		}
-		}
-	}
+		
 
 
 	/**
-	* @param c the course to which this section must be added
-	* @param secondRow T/F if secondRow
+	* Adds a section  to the given course
+	* @param e - a HtmlElement row consisting of section information
+	* @param c the course - to which this section must be added
+	* @param secondRow T/F - if secondRow 
 	*/
+
 	private void addSection(HtmlElement e, Course c, boolean secondRow){
 
 		String type = e.getChildNodes().get(secondRow ? 0 : 1).asText();
@@ -271,11 +197,11 @@ public class Scraper {
 
 
 	/**
-
+	* A function for scraping  Course info 
+	* @param baseurl the domain of the webpage to be scraped
 	* @param term the term of the calendar year that must be scraped format (YYTT)
-	* @param baseurl the domain of the webpage to be scraped 
 	* @param sub the code of the department whose courses to be scraped
-	* 
+	* @return a List of Courses that were found in the webpage {@link Course}
 	*/
 	public List<Course> scrape(String baseurl, String term, String sub) {
 
