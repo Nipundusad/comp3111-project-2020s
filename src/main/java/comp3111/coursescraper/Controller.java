@@ -687,6 +687,10 @@ public class Controller {
     
     //IMPLEMENTATION OF SELECT_ALL BUTTON
     
+    /**
+     * Implementation of SelectAll Button in Filter Tab
+     * Selects All filters and changes text to DeselectAll after being clicked
+     */
     public void select_all() {
         AM.setSelected(true);
         PM.setSelected(true);
@@ -707,7 +711,10 @@ public class Controller {
     
     
     //IMPLEMENTATION OF DESELECT_ALL BUTTON
-
+    /**
+     * Implementation of DeselectAll Button in Filter Tab
+     * De-selects all filters and changes text to SelectAll after being clicked
+     */
     public void deselect_all() {
         AM.setSelected(false);
         PM.setSelected(false);
@@ -723,6 +730,13 @@ public class Controller {
        
         SELECT_ALL.setText("Select All");
         SELECT_ALL.setOnAction(t -> select_all());
+
+    
+    /**
+     * Scrapes based on textfieldURL, textfieldTerm, textfieldSubject and returns the number of courses
+     * @return numcourses - within result of scraping
+     */
+
     } 
     
     public int searchCount() {
@@ -746,8 +760,13 @@ public class Controller {
      public static int NUM_SECTIONS = 0;
      
 
-    
-     public static int inInstructorSearch(String _ins){
+     /**
+      * This function checks whether instructor has already been scraped or not
+      * @param instr - name of the instructor to check
+      * @return index of the instructor - found in the list of Instructors scraped
+      * 
+      */
+     public static int inInstructorSearch(String instr){
 
         if(INSTRUCTOR.size() == 0) {
         	
@@ -755,7 +774,7 @@ public class Controller {
         }
 
         for(int i = 0; i < INSTRUCTOR.size(); i++){
-          if(INSTRUCTOR.get(i).getName().equals(_ins)) {
+          if(INSTRUCTOR.get(i).getName().equals(instr)) {
         	  	return i;
           }
         }
