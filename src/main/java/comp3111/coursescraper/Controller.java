@@ -67,6 +67,12 @@ public class Controller {
 
     @FXML
     private Tab tabAllSubject;
+    
+    @FXML
+    /**
+     * Search All Button in AllSubject Tab
+     */
+    public Button SEARCH_ALL;
 
     @FXML
     private ProgressBar progressbar;
@@ -150,6 +156,7 @@ public class Controller {
     		SUBJECT_COUNT++;
     		progressbar.setProgress(SUBJECT_COUNT/ALL_SUBJECT_COUNT);
     	}
+    	
     	SELECT_ALL.setOnAction(e -> allSubjectSearch());
     }
     
