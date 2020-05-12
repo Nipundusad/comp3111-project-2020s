@@ -174,7 +174,7 @@ public class Slot {
 	/**
 	* Checks if slot is valid
 	* @param s slot to be check
-`	* return (T/F) - whether a slot is valid i.e between 9AM - 10PM
+	* @return (T/F) - whether a slot is valid i.e between 9AM - 10PM
 	*/
 	public static boolean isValidSlot(Slot s){
 				if(s == null) {

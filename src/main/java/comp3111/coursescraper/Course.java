@@ -36,7 +36,7 @@ public class Course {
 	 * Returns a slot of a course 
 
 	 * @param i - index of course slot
-	 * @returns the slot with the given index
+	 * @return the slot with the given index
 	 */
 	public Slot getSlot(int i) {
 		if (i >= 0 && i < numSlots)
