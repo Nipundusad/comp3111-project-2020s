@@ -17,7 +17,7 @@ public class Instructor{
 
 
   /**
-  * Member function to add a given section
+  * Member function to add a given section assigned to the instructor
   * @param s Section - to be assigned
   */
   public void addSection(Section s){
@@ -77,7 +77,7 @@ public class Instructor{
   /**
   * Checks if Instructor teaches a given section
   * @param section_code - section code of the Section
-  * @return if the Instructor teaches the section or not
+  * @return (T/F) - if the Instructor teaches the section or not
   */
   public boolean teaches(String section_code){
     String [] secname = section_code.split("\\s+");

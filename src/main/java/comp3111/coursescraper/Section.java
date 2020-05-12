@@ -14,6 +14,11 @@ public class Section {
 		private static final int MAX_SLOTS = 3;
 
 		
+		/**
+		  * Constructor for the Section class
+		  * @param sec_code - sectionCode of the Section 
+		  * @param sec_id - sectionID of the Section 
+		  */
 		public Section (String sec_code, int sec_id) {
 			
 			this.slots = new Slot [MAX_SLOTS];
@@ -28,13 +33,15 @@ public class Section {
 		}
 		
 		/**
-		 * @return the  slot
-		 * @param temp - the slot index to get
+		 * Returns the slot of the section for the given index
+		 * @param slot - the slot index to get
+		 * @return the slot with the given index	 
 		 */
 		public Slot get_slot(int slot){
 		    return this.slots[slot];
 		  }
 		/**
+		 * Returns the number of slots the section has
 		 * @return the number of slots
 		 */
 		public int get_num_of_slots() {
@@ -42,21 +49,23 @@ public class Section {
 		}
 		
 		/**
+		 * returns the section code of the section
 		 * @return the section code
 		 */
 		public String get_section_code(){
 			    return this.section_code;
 			  }
 		/**
+		 * returns the section ID of the section
 		 * @return the section ID
 		 */
 		public int get_section_ID(){
 			    return this.section_id;
 			  }
 		/**
-		  * Adds a slot into the Section
+		  * Adds a slot to the Section
 		  * @param s - the slot that must be added
-		  * @return True or False if the slot was successfully added or not
+		  * @return (T/F) - if the slot was successfully added or not
 		  */
 		public boolean add_slot(Slot s){
 
@@ -70,7 +79,8 @@ public class Section {
 		  }
 		
 		/**
-		  * @return string containing the section info and its slots
+		 * returns a string to print the Section
+		  * @return string - containing the section details and its slots
 		  */
 		 public String toString(){
 

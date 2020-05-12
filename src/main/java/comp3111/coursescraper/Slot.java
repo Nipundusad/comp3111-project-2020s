@@ -7,21 +7,34 @@ import java.util.Locale;
 import java.time.format.DateTimeFormatter;
 
 
-
+/**
+ * Slot class (E.G. We14:00-15:50:Rm 5620, Lift 31-32 (70))
+ * @author mgoyal
+ * Task 1
+ */
 public class Slot {
 	private int day;
 	private LocalTime start;
 	private LocalTime end;
 	private String venue;
 	private String type; /// type data member to help clone a slot 
+	/**
+	 * Array of Dates
+	 */
 	public static final String DAYS[] = {"Mo", "Tu", "We", "Th", "Fr", "Sa"};
+	/**
+	 * Mapping of days with numbers ( EG: MON:0, TUE:1...)
+	 */
 	public static final Map<String, Integer> DAYS_MAP = new HashMap<String, Integer>();
 	static {
 		for (int i = 0; i < DAYS.length; i++)
 			DAYS_MAP.put(DAYS[i], i);
 	}
 
-	
+	/**
+	 * Creates a Clone of a Slot
+	 * @return new Slot
+	 */
 	@Override
 	public Slot clone() {
 		Slot s = new Slot();
@@ -32,28 +45,49 @@ public class Slot {
 		s.type = this.type;
 		return s;
 	}
-
+	
+	/**
+	 * Returns String of Slot
+	 * @return String representation of a Slot
+	 */
 	public String toString() {
 		return DAYS[day] + start.toString() + "-" + end.toString() + ":" + venue;
 	}
 	
+	/**
+	 * Returns the starting hour in int
+	 * @return int - starting hour of slot
+	 */
 	public int getStartHour() {
 		return start.getHour();
 	}
 
+	/**
+	 * Returns the starting minute in int
+	 * @return int - starting minute of slot
+	 */
 	public int getStartMinute() {
 		return start.getMinute();
 	}
 
+	/**
+	 * Returns the ending hour in int
+	 * @return int - ending hour of slot
+	 */
 	public int getEndHour() {
 		return end.getHour();
 	}
 
+	/**
+	 * Returns the ending minute in int
+	 * @return int - ending minute of slot
+	 */	
 	public int getEndMinute() {
 		return end.getMinute();
 	}
 
 	/**
+	 * returns LocalTime obj of start
 	 * @return the start
 	 */
 	public LocalTime getStart() {
@@ -61,6 +95,7 @@ public class Slot {
 	}
 
 	/**
+	 * * Sets start time of Slot to the pattern ("hh:mm")
 	 * @param start the start to set
 	 */
 	public void setStart(String start) {
@@ -68,6 +103,8 @@ public class Slot {
 	}
 
 	/**
+	 *  returns LocalTime Object of End
+
 	 * @return the end
 	 */
 	public LocalTime getEnd() {
@@ -75,6 +112,8 @@ public class Slot {
 	}
 
 	/**
+	 *  Sets the end time of Slot to the pattern ("hh:mm")
+
 	 * @param end the end to set
 	 */
 	public void setEnd(String end) {
@@ -82,6 +121,7 @@ public class Slot {
 	}
 
 	/**
+	 *returns string venue of slot
 	 * @return the venue
 	 */
 	public String getVenue() {
@@ -89,6 +129,7 @@ public class Slot {
 	}
 
 	/**
+	 * sets param string venue of Slot
 	 * @param venue the venue to set
 	 */
 	public void setVenue(String venue) {
@@ -96,6 +137,7 @@ public class Slot {
 	}
 
 	/**
+	 * returns int day of Slot
 	 * @return the day
 	 */
 	public int getDay() {
@@ -103,6 +145,7 @@ public class Slot {
 	}
 
 	/**
+	 * sets int day of Slot
 	 * @param day the day to set
 	 */
 	public void setDay(int day) {
@@ -110,7 +153,9 @@ public class Slot {
 	}
 
 	// Task 1 additional member functions
+	
 	/**
+	 * returns string type of slot
 	 * @return type of Slot 
 	 */
 	public String getType() {
@@ -118,6 +163,7 @@ public class Slot {
 		}
 
 	/**
+	 * sets string type of Slot
 	 * @param type the type of Slot 
 	 */
 	public void setType(String type) { 
@@ -128,7 +174,7 @@ public class Slot {
 	/**
 	* Checks if slot is valid
 	* @param s slot to be check
-`	* return whether a slot is valid i.e between 9AM - 10PM
+`	* return (T/F) - whether a slot is valid i.e between 9AM - 10PM
 	*/
 	public static boolean isValidSlot(Slot s){
 				if(s == null) {
