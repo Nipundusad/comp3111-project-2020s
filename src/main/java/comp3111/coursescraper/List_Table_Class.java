@@ -22,7 +22,7 @@ import javafx.scene.control.Label;
 public class List_Table_Class {
 	private String coursecode;
 	private String section;
-	private String cname;
+	private String coursename;
 	private String instructor;
 	private CheckBox enroll;
 	private Color colours;
@@ -42,7 +42,7 @@ public class List_Table_Class {
 	public List_Table_Class(String cc, String sect, String cn, String instr, Color col, int t) {
 		this.coursecode = cc;
 		this.section = sect;
-		this.cname = cn;
+		this.coursename = cn;
 		this.instructor = instr;
 		this.enroll = new CheckBox();
 		this.colours = col;
@@ -57,7 +57,7 @@ public class List_Table_Class {
 	public List_Table_Class() {
 		this.coursecode = " ";
 		this.section = " ";
-		this.cname = " ";
+		this.coursename = " ";
 		this.instructor = " ";
 		this.colours = Color.rgb(0, 0, 0, 0);
 		this.today = 1;
@@ -87,7 +87,7 @@ public class List_Table_Class {
 	 * @return course name of the object
 	 */
 	public String getCoursename() {
-		return this.cname;
+		return this.coursename;
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class List_Table_Class {
 	 * @param cn Course name
 	 */
 	public void setCoursename(String cn) {
-		this.cname = cn;
+		this.coursename = cn;
 	}
 	
 	/**
