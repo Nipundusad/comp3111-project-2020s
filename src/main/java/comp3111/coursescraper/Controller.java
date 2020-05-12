@@ -142,7 +142,7 @@ public class Controller {
         int ALL_SUBJECT_COUNT = 0;				//initializing number of courses        
     	List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(),textfieldSubject.getText());
     	for(Course s : v) ALL_SUBJECT_COUNT++;
-    	System.out.println("Total Number of Categories/Code Prefix:" + ALL_SUBJECT_COUNT)
+    	System.out.println("Total Number of Categories/Code Prefix:" + ALL_SUBJECT_COUNT);
     	SELECT_ALL.setOnAction(e -> allSubjectSearch2());
     }
     @FXML
@@ -152,7 +152,7 @@ public class Controller {
     	List<Course> v = scraper.scrape(textfieldURL.getText(), textfieldTerm.getText(), textfieldSubject.getText());
     	for(Course w : v) ALL_SUBJECT_COUNT++;
     	for(Course s : v) {
-    		System.out.println(s + 'is done');
+    		System.out.println(s + "is done");
     		SUBJECT_COUNT++;
     		progressbar.setProgress(SUBJECT_COUNT/ALL_SUBJECT_COUNT);
     	}
