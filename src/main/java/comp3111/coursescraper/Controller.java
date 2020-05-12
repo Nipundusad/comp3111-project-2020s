@@ -568,7 +568,7 @@ public class Controller {
     
     /**
      * Scrapes based on textfieldURL, textfieldTerm, textfieldSubject and returns the number of courses
-     * @return num courses - within result of scraping
+     * @return numcourses - within result of scraping
      */
     public int searchCount() {
         int numcourses = 0;
