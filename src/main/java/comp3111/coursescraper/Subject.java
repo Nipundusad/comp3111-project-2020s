@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class Subject {
 	private String title ;
-	private List<Courses> courses;
+	private List<Course> courses;
 
 	public Subject () {
-		courses = new ArrayList<Courses>();
+		courses = new ArrayList<Course>();
 	}
 	/**
 	 * @return the title
