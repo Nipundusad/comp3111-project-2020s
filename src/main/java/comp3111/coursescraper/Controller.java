@@ -133,18 +133,20 @@ public class Controller {
     
     @FXML
     void allSubjectSearch() {
-    	
     }
 
     @FXML
     void findInstructorSfq() {
-    	buttonInstructorSfq.setDisable(true);
     }
 
     @FXML
     void findSfqEnrollCourse() {
-
+    	buttonSfqEnrollCourse.setDisable(true);
+    	if (buttonSearch.isPressed() || SEARCHALL.isPressed()) {
+    		buttonSfqEnrollCourse.setDisable(false);
+    	}
     }
+
     
     /**
      * Filter data (Task 2), add the filtered sections to the List (Task 3)
